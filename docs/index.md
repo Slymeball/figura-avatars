@@ -25,6 +25,12 @@ Hello! This is a page that holds download links for all of my [Figura](https://g
 > 
 > [Download](https://github.com/Slymeball/figura-models/raw/main/Jello.zip)
 
+> ### Pumpkin
+> Ever need an outfit for autumn? Come on, we all have. Good news, here's a pumpkin.  
+> */\* Image coming soon! \*/*
+> 
+> [Download](https://github.com/Slymeball/figura-models/raw/main/Pumpkin.zip)
+
 > ### Shulker Shell Armor
 > Do you have an issue staying together? Wish you had hard items to keep your shape stable? Well now you can with revolutionary shulker shells, wrapped around your arms and head!  
 > */\* Image coming soon! \*/*
