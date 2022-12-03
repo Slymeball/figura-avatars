@@ -1,6 +1,6 @@
 # AFK Scripts
 
-A collection of scripts that require `Slyme_AFK`. This includes the base AFK script, the nameplate extension script, and the animation extension script.'
+A collection of scripts that require `Slyme_AFK`. This includes the base AFK script, the nameplate extension script, and the animation extension script.
 
 ## Base AFK
 
