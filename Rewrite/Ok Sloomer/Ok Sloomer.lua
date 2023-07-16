@@ -14,6 +14,7 @@ zoom.defaults = {
     maximumZoom = 20, -- in form of 1/x
     scrolling = 1,
     scrollHint = 1,
+    sensitivityMultiplier = .15
 }
 
 zoom.config = config:load("zoom")
@@ -37,15 +38,31 @@ for k, v in pairs(zoom.defaults) do
     end
 end
 
+local defaultSensitivity
+local function setZoom(num)
+    renderer:setFOV(num)
+    if renderer.getSensitivity then
+        if (not num) and (defaultSensitivity) then
+            renderer:setSensitivity(defaultSensitivity)
+            defaultSensitivity = nil
+        else
+            if not defaultSensitivity then
+                defaultSensitivity = renderer:getSensitivity()
+            end
+            renderer:setSensitivity(defaultSensitivity + (zoom.config.sensitivityMultiplier * (renderer:getFOV() - 1)))
+        end
+    end
+end
+
 zoom.keybind = keybinds:newKeybind('§a§lOk Sloomer §8- §7Zoom', zoom.config.keybind, false)
 
 function zoom.keybind.press()
-    renderer:setFOV(zoom.config.zoomFOV)
+    setZoom(zoom.config.zoomFOV)
     if zoom.config.spyglassSounds >= 1 then sounds["minecraft:item.spyglass.use"]:setPos(player:getPos()):setVolume(.35):play() end
 end
 
 function zoom.keybind.release()
-    renderer:setFOV()
+    setZoom(nil)
     if zoom.config.spyglassSounds >= 1 then sounds["minecraft:item.spyglass.stop_using"]:setPos(player:getPos()):setVolume(.35):play() end
 end
 
@@ -57,7 +74,7 @@ end, "Keybind Change Listener")
 
 events.MOUSE_SCROLL:register(function(dir)
     if zoom.keybind:isPressed() and zoom.config.scrolling >= 1 then
-        renderer:setFOV(math.clamp(renderer:getFOV() + (dir * -.25 * renderer:getFOV()), 1/zoom.config.maximumZoom, 1/zoom.config.minimumZoom))
+        setZoom(math.clamp(renderer:getFOV() + (dir * -.25 * renderer:getFOV()), 1/zoom.config.maximumZoom, 1/zoom.config.minimumZoom))
         -- print(1/renderer:getFOV())
         if zoom.config.spyglassSounds >= 1 then sounds["minecraft:entity.chicken.step"]:setPitch(2):setSubtitle("Spyglass zooms"):setVolume(99):setPos(player:getPos()):play() end
         if zoom.config.scrollHint >= 1 then host:setActionbar('[{"text":"Zoom Level:","color":"aqua","bold":true},{"text":" x' .. round(1 / renderer:getFOV(), 2) .. '","color":"white","bold":false}]') end
