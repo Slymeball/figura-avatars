@@ -90,7 +90,7 @@ events.TICK:register(function ()
         local c = candler.lib
         c.newCategory("OkSloomer", {
             description = "Candler integration for Ok Sloomer, used for configuring zoom options.",
-            version = "0.1.0",
+            version = "0.1.1",
             author = "Slymeball"
         })
         c.setCommand("oksloomer", "zoom", {
