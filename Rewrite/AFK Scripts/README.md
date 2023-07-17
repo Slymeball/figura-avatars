@@ -1,4 +1,5 @@
-# AFK Scripts
+<p align="center"><img src="https://github.com/Slymeball/figura-avatars/blob/main/Icons/afk%20icon.png?raw=true" width=25%></p>
+<h1 align="center">Slyme's AFK Scripts</h1>
 
 A collection of scripts that require `Slyme_AFK`. This includes the base AFK script, the nameplate extension script, and the animation extension script.
 
