@@ -142,7 +142,6 @@ end
 
 -- pets a target.
 function pings.patpat(target)
-    -- print(target)
     -- entity
     if type(target) == "string" then
         local target = world.getEntity(target)
@@ -159,7 +158,6 @@ function pings.patpat(target)
         else
             return
         end
-        -- print(thisShouldBeLocalButLuaIsDumb.box)
     -- block
     elseif type(target) == "Vector3" then
         local target = world.getBlockState(target)
@@ -171,12 +169,9 @@ function pings.patpat(target)
         else
             return
         end
-        -- print(box)
     else
-        -- print("what the fuck")
         return
     end
-    -- print(target)
 
     -- I stole this code because I am shit at math. What the hell is she gonna do anyways?
     local box2 = thisShouldBeLocalButLuaIsDumb.box / 2
@@ -195,10 +190,8 @@ end
 -- Register keybind
 patpat.key = keybinds:fromVanilla("key.use")
     :onPress(function ()
-        -- this is so fucking long, why???
         if player:isSneaking() and player:getHeldItem().id == "minecraft:air" and (not patpat.config.requireOffhand or player:getHeldItem(true).id == "minecraft:air") then
             local target = check()
-            -- print(target)
             if target then
                 pings.patpat(target)
                 lastPat = world.getTime() + patpat.config.defaultParticle.every - 1
