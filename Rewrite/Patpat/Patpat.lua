@@ -99,6 +99,9 @@ local function check()
             return nil
         end
 
+        -- is nohearts on?
+        iBetMakingThisLocalWouldNeverWork = entity:getVariable("patpat.noHearts")
+
         return entity:getUUID()
     else
         local block = player:getTargetedBlock(true, host:getReachDistance())
@@ -111,6 +114,8 @@ local function check()
                     sounds["minecraft:entity.villager.no"]:pos(player:getPos()):pitch(.85)
                     return nil
                 end
+                -- is nohearts on?
+                iBetMakingThisLocalWouldNeverWork = world.avatarVars()[uuid]["patpat.noHearts"]
             end
         end
 
@@ -177,7 +182,9 @@ function pings.patpat(target)
     thisShouldBeLocalButLuaIsDumb.box:applyFunc(function(val) return val * math.random() end)
     local particlePos = thisShouldBeLocalButLuaIsDumb.pos + thisShouldBeLocalButLuaIsDumb.box.xyz - box2.x_z
     
-    particles[patpat.config.defaultParticle.particleType]:scale(.75):pos(particlePos):spawn()
+    if not iBetMakingThisLocalWouldNeverWork then
+        particles[patpat.config.defaultParticle.particleType]:scale(.75):pos(particlePos):spawn()
+    end
     host:swingArm()
 
     thisShouldBeLocalButLuaIsDumb = nil
