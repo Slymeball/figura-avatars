@@ -110,12 +110,14 @@ local function check()
         if block:getEntityData() then
             if block:getEntityData().SkullOwner then
                 local uuid = client:intUUIDToString(table.unpack(block:getEntityData().SkullOwner.Id))
-                if world.avatarVars()[uuid]["patpat.noPats"] == true then
-                    sounds["minecraft:entity.villager.no"]:pos(player:getPos()):pitch(.85)
-                    return nil
+                if world.avatarVars()[uuid] then
+                    if world.avatarVars()[uuid]["patpat.noPats"] == true then
+                        sounds["minecraft:entity.villager.no"]:pos(player:getPos()):pitch(.85)
+                        return nil
+                    end
+                    -- is nohearts on?
+                    iBetMakingThisLocalWouldNeverWork = world.avatarVars()[uuid]["patpat.noHearts"]
                 end
-                -- is nohearts on?
-                iBetMakingThisLocalWouldNeverWork = world.avatarVars()[uuid]["patpat.noHearts"]
             end
         end
 
