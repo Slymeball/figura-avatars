@@ -16,7 +16,10 @@ patpat.config = {
     }
 }
 
--- Opts you out of pats.
+-- Opts you into pats. Setting this to false will also protect you from scripts that respect "patpat.noPats"
+-- avatar:store("patpat.yesPats", true)
+
+-- Opts you out of pats in older versions of Patpat and in scripts that use an opt-out system.
 -- avatar:store("patpat.noPats", true)
 
 -- Opts you out of the patter's particles.
@@ -66,6 +69,15 @@ local patting = {}
 local myPatters = {}
 local patted = false
 
+-- if opt-in isn't set, set it to false.
+if world.avatarVars()[avatar:getUUID()]["patpat.yesPats"] == nil then
+    avatar:store("patpat.yesPats", false)
+end
+
+if world.avatarVars()[avatar:getUUID()]["patpat.yesPats"] == false then
+    avatar:store("patpat.noPats", true)
+end
+
 -- utility
 local function callFuncts(t, params)
     for _, v in pairs(t) do
@@ -75,12 +87,14 @@ end
 
 -- maintain compatibility with those who don't feel the need to upgrade.
 avatar:store("petpet", function(uuid, timer)
-    myPatters[uuid] = tonumber(timer)
+    if player:getVariable("patpat.yesPats") then
+        myPatters[uuid] = tonumber(timer)
 
-    if not patted then
-        patted = true
-        callFuncts(patpat.functions.onPat)
-        callFuncts(patpat.functions.togglePat, patted)
+        if not patted then
+            patted = true
+            callFuncts(patpat.functions.onPat)
+            callFuncts(patpat.functions.togglePat, patted)
+        end
     end
 end)
 
@@ -95,6 +109,17 @@ local function check()
 
         -- this person asked not to be patted. stop trying.
         if entity:getVariable("patpat.noPats") == true then
+            sounds["minecraft:entity.villager.no"]:pos(player:getPos()):pitch(.85)
+            return nil
+        end
+
+        if entity:getVariable("petpet.yesPats") == false then
+            sounds["minecraft:entity.villager.no"]:pos(player:getPos()):pitch(.85)
+            return nil
+        end
+
+        -- this person doesn't even have any form of petpet or patpat. leave them alone.
+        if entity:getVariable("petpet.yesPats") == nil and not entity:getVariable("petpet") then
             sounds["minecraft:entity.villager.no"]:pos(player:getPos()):pitch(.85)
             return nil
         end
@@ -115,8 +140,21 @@ local function check()
                         sounds["minecraft:entity.villager.no"]:pos(player:getPos()):pitch(.85)
                         return nil
                     end
+
+                    if world.avatarVars()[uuid]["patpat.yesPats"] == false then
+                        sounds["minecraft:entity.villager.no"]:pos(player:getPos()):pitch(.85)
+                        return nil
+                    end
+
+                    if world.avatarVars()[uuid]["patpat.yesPats"] == nil and not world.avatarVars()[uuid]["petpet"] then
+                        sounds["minecraft:entity.villager.no"]:pos(player:getPos()):pitch(.85)
+                        return nil
+                    end
+
                     -- is nohearts on?
                     iBetMakingThisLocalWouldNeverWork = world.avatarVars()[uuid]["patpat.noHearts"]
+                else
+                    return nil
                 end
             end
         end
