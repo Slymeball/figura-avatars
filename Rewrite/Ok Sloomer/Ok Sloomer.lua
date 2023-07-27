@@ -1,8 +1,9 @@
+
 local function round(number, decimals)
     local power = 10^decimals
     return math.floor(number * power) / power
 end
-
+if not host:isHost() then return end
 local zoom = {}
 
 -- DEFAULTS
