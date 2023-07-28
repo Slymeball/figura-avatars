@@ -68,6 +68,7 @@ local lastPat = -1
 local patting = {}
 local myPatters = {}
 local patted = false
+local shouldShowHearts, targetInformation
 
 -- if opt-in isn't set, set it to false.
 if world.avatarVars()[avatar:getUUID()]["patpat.yesPats"] == nil then
@@ -125,7 +126,7 @@ local function check()
         end
 
         -- is nohearts on?
-        iBetMakingThisLocalWouldNeverWork = entity:getVariable("patpat.noHearts")
+        shouldShowHearts = entity:getVariable("patpat.noHearts")
 
         return entity:getUUID()
     else
@@ -152,7 +153,7 @@ local function check()
                     end
 
                     -- is nohearts on?
-                    iBetMakingThisLocalWouldNeverWork = world.avatarVars()[uuid]["patpat.noHearts"]
+                    shouldShowHearts = world.avatarVars()[uuid]["patpat.noHearts"]
                 else
                     return nil
                 end
@@ -184,7 +185,7 @@ function pings.patpat(target)
     if type(target) == "string" then
         local target = world.getEntity(target)
         if target then
-            thisShouldBeLocalButLuaIsDumb = {
+            targetInformation = {
                 pos = target:getPos(),
                 box = target:getBoundingBox()
             }
@@ -200,7 +201,7 @@ function pings.patpat(target)
     elseif type(target) == "Vector3" then
         local target = world.getBlockState(target)
         if target then
-            thisShouldBeLocalButLuaIsDumb = {
+            targetInformation = {
                 pos = target:getPos() + vec(0.5, 0, 0.5),
                 box = vec(0.7, 0.7, 0.7)
             }
@@ -212,17 +213,15 @@ function pings.patpat(target)
     end
 
     -- I stole this code because I am shit at math. What the hell is she gonna do anyways?
-    local box2 = thisShouldBeLocalButLuaIsDumb.box / 2
+    local box2 = targetInformation.box / 2
 
-    thisShouldBeLocalButLuaIsDumb.box:applyFunc(function(val) return val * math.random() end)
-    local particlePos = thisShouldBeLocalButLuaIsDumb.pos + thisShouldBeLocalButLuaIsDumb.box.xyz - box2.x_z
+    targetInformation.box:applyFunc(function(val) return val * math.random() end)
+    local particlePos = targetInformation.pos + targetInformation.box.xyz - box2.x_z
     
-    if not iBetMakingThisLocalWouldNeverWork then
+    if not shouldShowHearts then
         particles[patpat.config.defaultParticle.particleType]:scale(.75):pos(particlePos):spawn()
     end
     host:swingArm()
-
-    thisShouldBeLocalButLuaIsDumb = nil
 end
 
 -- Register keybind
