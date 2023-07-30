@@ -13,3 +13,4 @@ Action List gives you a different way to access your Action Wheel. It replaces t
 
 # Download
 You can download Action List @ <INSERT LINK>
+:warning: **MAKE SURE TO PUT THE SCRIPT AND GUI.BBMODEL IN THE SAME FOLDER.** If they are not in the same folder, Action List will most likely error (unless you tell it where GUI is on line 114).
