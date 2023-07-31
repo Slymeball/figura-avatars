@@ -340,14 +340,18 @@ events.MOUSE_PRESS:register(function (button,status,modifier)
                 goto skipClick
             end
             ::skipScroll::
-            if button == 0 and action.action.toggle and not action.action:isToggled() then
+            if button == 0 and (action.action.toggle or action.action.untoggle) and not action.action:isToggled() then
                 sound:play()
                 action.action:setToggled(true)
-                action.action.toggle(action.action:isToggled(), action.action)
-            elseif button == 0 and action.action.untoggle and action.action:isToggled() then
+                if action.action.toggle then
+                    action.action.toggle(action.action:isToggled(), action.action)
+                end
+            elseif button == 0 and (action.action.toggle or action.action.untoggle) and action.action:isToggled() then
                 sound:play()
                 action.action:setToggled(false)
-                action.action.untoggle(action.action:isToggled(), action.action)
+                if action.action.untoggle then
+                    action.action.untoggle(action.action:isToggled(), action.action)
+                end
             end
             if button == 0 and action.action.leftClick then
                 sound:play()
