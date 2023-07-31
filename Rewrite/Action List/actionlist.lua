@@ -351,6 +351,8 @@ events.MOUSE_PRESS:register(function (button,status,modifier)
                 action.action:setToggled(false)
                 if action.action.untoggle then
                     action.action.untoggle(action.action:isToggled(), action.action)
+                else
+                    action.action.toggle(action.action:isToggled(), action.action)
                 end
             end
             if button == 0 and action.action.leftClick then
