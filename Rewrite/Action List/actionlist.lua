@@ -129,7 +129,7 @@ local function reloadWheel()
         wheelData[idx] = {}
         wheelData[idx].action = v
 
-        local title
+        local title = ""
         if v:isToggled() and v:getToggleTitle() then
             title = v:getToggleTitle()
         else
