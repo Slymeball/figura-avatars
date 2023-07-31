@@ -133,7 +133,9 @@ local function reloadWheel()
         if v:isToggled() and v:getToggleTitle() then
             title = v:getToggleTitle()
         else
-            title = v:getTitle()
+            if v:getTitle() then
+                title = v:getTitle()
+            end
         end
 
         if string.find(title, '"\n",') then
