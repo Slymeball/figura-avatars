@@ -39,7 +39,7 @@ scriptOrder = {
 
 # Usage
 
-1. Put the latest `autoloader.lua` (see pins) in your avatar's files
+1. Put the latest `autoloader.lua` ([click here](https://github.com/Slymeball/figura-avatars/blob/main/Rewrite/Autoloader/autoloader.lua)) in your avatar's files
 2. Add `"autoScripts": ["autoloader"]` to your `avatar.json` file.
 3. (Optional, but like, why not do this?) Prioritize your scripts
 
