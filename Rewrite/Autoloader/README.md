@@ -1,4 +1,4 @@
-<!--<p align="center"><img src="https://github.com/Slymeball/figura-avatars/blob/main/Icons/patpat%20icon.png?raw=true" width=25%></p>-->
+<p align="center"><img src="https://github.com/Slymeball/figura-avatars/blob/main/Icons/autoloader%20icon.png?raw=true" width=25%></p>
 <h1 align="center">Autoloader - Use `autoScripts` with ease!</h1>
 
 Autoloader is a script that requires all of your scripts based on their priority. By default, every script has a priority of zero, however this can be overridden with the `scriptOrder` table in `autoloader.lua`. For example, an avatar with the scripts...
